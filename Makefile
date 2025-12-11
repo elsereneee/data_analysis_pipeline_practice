@@ -9,15 +9,10 @@ report/count_report.html: report/count_report.qmd results/figure/isles.png resul
 	quarto render report/count_report.qmd
 
 # 2. Pattern rule to create PNG figures from DAT files
-# '%' matches the filename (e.g., 'isles', 'abyss')
-# $@ refers to the target (the .png file)
-# $< refers to the first dependency (the .dat file)
 results/figure/%.png: results/%.dat scripts/plotcount.py
 	python scripts/plotcount.py --input_file=$< --output_file=$@
 
 # 3. Pattern rule to create DAT files from raw TXT data
-# $@ refers to the target (the .dat file)
-# $< refers to the first dependency (the .txt file)
 results/%.dat: data/%.txt scripts/wordcount.py
 	python scripts/wordcount.py --input_file=$< --output_file=$@
 
